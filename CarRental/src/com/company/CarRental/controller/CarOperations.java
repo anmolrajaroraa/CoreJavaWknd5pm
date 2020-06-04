@@ -41,7 +41,7 @@ public class CarOperations {
 		for( Car car : Car.getCars() ) {
 			details += showDetails(car);
 		}
-		return details;
+		return details.length() == 0 ? "No car found in fleet!!" : details;
 	}
 	
 	/**
@@ -56,6 +56,49 @@ public class CarOperations {
 		carDetails += "\nSeating capacity: " + car.getSeatingCapacity();
 		carDetails += "\nRent per day: " + car.getRentPerDay();
 		return carDetails;
+	}
+	
+	/**
+	 * This function returns Car object if car with the specified vehicle number is found
+	 * 
+	 * @param vehicleNumber
+	 * @return
+	 */
+	public Car getCar(String vehicleNumber) {
+		for(Car car : Car.getCars()) {
+			if(car.getVehicleNumber().equals(vehicleNumber)) {
+				return car;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * This functions returns details for a specific car if it is present in the fleet
+	 * 
+	 * @param vehicleNumber
+	 * @return
+	 */
+	public String showDetailsForCar(String vehicleNumber) {
+		Car car = getCar(vehicleNumber);
+		if(car != null) {
+			return showDetails(car);
+		}
+		return "Car Not Found!!";
+	}
+	
+	/**
+	 * This function is used to remove a car from the fleet
+	 * 
+	 * @param vehicleNumber
+	 * @return
+	 */
+	public String deleteCar(String vehicleNumber) {
+		Car car = getCar(vehicleNumber);
+		if(car != null) {
+			return Car.getCars().remove(car) ? "Car Removed From Fleet..." : "Car Couldn't be Deleted...";
+		}
+		return "Car Not Found!!";
 	}
 	
 }
