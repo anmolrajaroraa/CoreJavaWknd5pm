@@ -1,5 +1,9 @@
 package com.company.CarRental.controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+
+import com.company.CarRental.model.BookingStatus;
 import com.company.CarRental.model.Car;
 
 public class CarOperations {
@@ -97,6 +101,51 @@ public class CarOperations {
 		Car car = getCar(vehicleNumber);
 		if(car != null) {
 			return Car.getCars().remove(car) ? "Car Removed From Fleet..." : "Car Couldn't be Deleted...";
+		}
+		return "Car Not Found!!";
+	}
+	
+	private boolean verifyBookingDates(String issueDate, String returnDate, 
+			ArrayList<BookingStatus> bookings) {
+		
+		LocalDate newIssueDate = LocalDate.parse(issueDate);
+		LocalDate newReturnDate = LocalDate.parse(returnDate);
+		LocalDate currentDate = LocalDate.now();
+		if(newIssueDate.compareTo(currentDate) < 0 || newReturnDate.compareTo(currentDate) < 0) {
+			return false;
+		}
+		
+		for(BookingStatus booking : bookings) {
+			LocalDate bookingIssueDate = booking.getIssueDate();
+			LocalDate bookingReturnDate = booking.getReturnDate();
+			if(newIssueDate.compareTo(bookingIssueDate) >= 0 && newIssueDate.compareTo(bookingReturnDate) <= 0) {
+				return false;
+			}
+			if(newReturnDate.compareTo(bookingIssueDate) >= 0 && newReturnDate.compareTo(bookingReturnDate) <= 0) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	// 6 - 10 June
+	// 12 - 15 June
+	// 20 - 25 June
+	
+	// 7 - 11 June
+	// 5 - 9 June
+	// 7 - 9 June
+	// 4 - 9 June
+	// 16 - 18 June
+	
+	public String bookCar(String vehicleNumber, String customerName, String customerPhoneNo, String issueDate, String returnDate) {
+		Car car = getCar(vehicleNumber);
+		if(car != null) {
+			if (verifyBookingDates(issueDate, returnDate, car.getBookings())) {
+				return "Booking Done";
+			}
+			return "Booking cannot be made!!";
 		}
 		return "Car Not Found!!";
 	}

@@ -13,6 +13,7 @@ public class View {
 		CarOperations operations = new CarOperations();
 		operations.addCar("DL2CAR0001", "hyundai verna 2020", 5, 1000);
 		operations.addCar("DL2CAR0002", "mercedes benz gla", 5, 5000);
+		operations.bookCar("DL2CAR0001", "Ram Kumar", "1234123412", "2020-06-06", "2020-06-10");
 		
 		while(true) {
 			System.out.println("\n1. Add a new car to the fleet");
