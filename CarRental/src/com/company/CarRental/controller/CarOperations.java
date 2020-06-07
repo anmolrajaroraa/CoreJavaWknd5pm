@@ -2,6 +2,7 @@ package com.company.CarRental.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.company.CarRental.model.BookingStatus;
 import com.company.CarRental.model.Car;
@@ -24,7 +25,7 @@ public class CarOperations {
 	 * @param model
 	 * @param seatingCapacity
 	 * @param rentPerDay
-	 * @return
+	 * @return message based on addition of Car
 	 */
 	public String addCar(String vehicleNumber, String model, int seatingCapacity, int rentPerDay) {
 		
@@ -59,6 +60,14 @@ public class CarOperations {
 		carDetails += "\nModel: " + car.getModel();
 		carDetails += "\nSeating capacity: " + car.getSeatingCapacity();
 		carDetails += "\nRent per day: " + car.getRentPerDay();
+		for(int i = 0; i < car.getBookings().size(); i++) {
+			BookingStatus booking = car.getBookings().get(i);
+			carDetails += "\n\nBooking " + (i+1);
+			carDetails += "\nCustomer name: " + booking.getCustomerName();
+			carDetails += "\nCustomer phone no: " + booking.getCustomerPhoneNo();
+			carDetails += "\nIssue date: " + booking.getIssueDate();
+			carDetails += "\nReturn date: " + booking.getReturnDate();
+		}
 		return carDetails;
 	}
 	
@@ -129,25 +138,38 @@ public class CarOperations {
 		return true;
 	}
 	
-	// 6 - 10 June
-	// 12 - 15 June
-	// 20 - 25 June
-	
-	// 7 - 11 June
-	// 5 - 9 June
-	// 7 - 9 June
-	// 4 - 9 June
-	// 16 - 18 June
-	
 	public String bookCar(String vehicleNumber, String customerName, String customerPhoneNo, String issueDate, String returnDate) {
 		Car car = getCar(vehicleNumber);
 		if(car != null) {
 			if (verifyBookingDates(issueDate, returnDate, car.getBookings())) {
-				return "Booking Done";
+				BookingStatus booking = new BookingStatus(customerName, customerPhoneNo, issueDate, returnDate);
+				car.getBookings().add(booking);
+				return car.getModel() + " booked for " + customerName + " from " + issueDate + " to " + returnDate;
 			}
 			return "Booking cannot be made!!";
 		}
 		return "Car Not Found!!";
 	}
+	
+//	public ArrayList<String> showCarsAvailableForBooking(String issueDate, String returnDate) {
+//		ArrayList<String> carsAvailable = new ArrayList<>();
+//		for(Car car : Car.getCars()) {
+//			if(verifyBookingDates(issueDate, returnDate, car.getBookings())) {
+//				carsAvailable.add(car.getVehicleNumber());
+//			}
+//		}
+//		return carsAvailable;
+//	}
+	
+	public HashMap<String, String> showCarsAvailableForBooking(String issueDate, String returnDate) {
+		HashMap<String, String> carsAvailable = new HashMap<>();
+		for(Car car : Car.getCars()) {
+			if(verifyBookingDates(issueDate, returnDate, car.getBookings())) {
+				carsAvailable.put(car.getVehicleNumber(), car.getModel());
+			}
+		}
+		return carsAvailable;
+	}
+
 	
 }

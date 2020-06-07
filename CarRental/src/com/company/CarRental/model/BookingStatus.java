@@ -26,11 +26,11 @@ public class BookingStatus {
 	 * @param issueDate
 	 * @param returnDate
 	 */
-	public BookingStatus(String customerName, long customerPhoneNo, LocalDate issueDate, LocalDate returnDate) {
+	public BookingStatus(String customerName, String customerPhoneNo, String issueDate, String returnDate) {
 		this.customerName = customerName;
-		this.customerPhoneNo = customerPhoneNo;
-		this.issueDate = issueDate;
-		this.returnDate = returnDate;
+		this.customerPhoneNo = Long.parseLong(customerPhoneNo);
+		this.issueDate = LocalDate.parse(issueDate);
+		this.returnDate = LocalDate.parse(returnDate);
 	}
 
 	public String getCustomerName() {
