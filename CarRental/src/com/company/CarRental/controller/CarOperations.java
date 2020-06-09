@@ -114,6 +114,13 @@ public class CarOperations {
 		return "Car Not Found!!";
 	}
 	
+	/**
+	 * 
+	 * @param issueDate
+	 * @param returnDate
+	 * @param bookings
+	 * @return
+	 */
 	private boolean verifyBookingDates(String issueDate, String returnDate, 
 			ArrayList<BookingStatus> bookings) {
 		
@@ -138,6 +145,16 @@ public class CarOperations {
 		return true;
 	}
 	
+	/**
+	 * You can book a car based on dates availability
+	 * 
+	 * @param vehicleNumber
+	 * @param customerName
+	 * @param customerPhoneNo
+	 * @param issueDate
+	 * @param returnDate
+	 * @return
+	 */
 	public String bookCar(String vehicleNumber, String customerName, String customerPhoneNo, String issueDate, String returnDate) {
 		Car car = getCar(vehicleNumber);
 		if(car != null) {
@@ -161,11 +178,74 @@ public class CarOperations {
 //		return carsAvailable;
 //	}
 	
+	/**
+	 * Check cars that are available for specific dates
+	 * 
+	 * @param issueDate
+	 * @param returnDate
+	 * @return
+	 */
 	public HashMap<String, String> showCarsAvailableForBooking(String issueDate, String returnDate) {
 		HashMap<String, String> carsAvailable = new HashMap<>();
 		for(Car car : Car.getCars()) {
 			if(verifyBookingDates(issueDate, returnDate, car.getBookings())) {
 				carsAvailable.put(car.getVehicleNumber(), car.getModel());
+			}
+		}
+		return carsAvailable;
+	}
+	
+	/**
+	 * Check cars that have enough seating capacity
+	 * 
+	 * @param seatingCapacity
+	 * @return
+	 */
+	public HashMap<String, String> showCarsAvailableForBooking(int seatingCapacity) {
+		HashMap<String, String> carsAvailable = new HashMap<>();
+		for(Car car : Car.getCars()) {
+			if(car.getSeatingCapacity() >= seatingCapacity) {
+				carsAvailable.put(car.getVehicleNumber(), car.getModel());
+			}
+		}
+		return carsAvailable;
+	}
+	
+	/**
+	 * Check cars that have the rent per day in a specified range
+	 * @param minRent
+	 * @param maxRent
+	 * @return
+	 */
+	public HashMap<String, String> showCarsAvailableForBooking(int minRent, int maxRent) {
+		HashMap<String, String> carsAvailable = new HashMap<>();
+		for(Car car : Car.getCars()) {
+			if(car.getRentPerDay() >= minRent && car.getRentPerDay() <= maxRent) {
+				carsAvailable.put(car.getVehicleNumber(), car.getModel());
+			}
+		}
+		return carsAvailable;
+	}
+	
+	/**
+	 * Check cars that based on dates, rent and seating capacity
+	 * 
+	 * @param issueDate
+	 * @param returnDate
+	 * @param seatingCapacity
+	 * @param minRent
+	 * @param maxRent
+	 * @return
+	 */
+	public HashMap<String, String> showCarsAvailableForBooking(String issueDate, String returnDate, int seatingCapacity, int minRent, int maxRent) {
+		HashMap<String, String> carsAvailable = new HashMap<>();
+		for(Car car : Car.getCars()) {
+			if(verifyBookingDates(issueDate, returnDate, car.getBookings())) {
+				if(car.getSeatingCapacity() >= seatingCapacity) {
+					if(car.getRentPerDay() >= minRent && car.getRentPerDay() <= maxRent) {
+						carsAvailable.put(car.getVehicleNumber(), car.getModel());
+					}
+				}
 			}
 		}
 		return carsAvailable;

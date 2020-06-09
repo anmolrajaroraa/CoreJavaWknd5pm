@@ -1,21 +1,37 @@
 package com.company.CarRental.view;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 import com.company.CarRental.controller.CarOperations;
 
 public class View {
+	
+	static Scanner scanner = new Scanner(System.in);
+	
+	static String getCarChoiceFromUser(HashMap<String, String> carsAvailable) {
+		if(carsAvailable.size() == 0) {
+			System.out.println("No cars available for the dates provided");
+			return null;
+		}
+		System.out.println("\nAvailable cars:\n");
+		int counter = 1;
+		for(String value : carsAvailable.values()) {
+			System.out.println(counter + ". " + value);
+			counter++;
+		}
+		System.out.println("Which car do you want to book?");
+		int choice = scanner.nextInt();
+		scanner.nextLine();
+		return (String) carsAvailable.keySet().toArray()[choice - 1];
+	}
 
 	public static void main(String[] args) {
-		
-		Scanner scanner = new Scanner(System.in);
 		
 		CarOperations operations = new CarOperations();
 		System.out.println(operations.addCar("DL2CAR0001", "hyundai verna 2020", 5, 1000));
 		System.out.println(operations.addCar("DL2CAR0002", "mercedes benz gla", 5, 5000));
-		System.out.println(	operations.bookCar("DL2CAR0001", "Ram Kumar", "1234123412", "2020-06-07", "2020-06-10"));
+		System.out.println(	operations.bookCar("DL2CAR0001", "Ram Kumar", "1234123412", "2020-06-10", "2020-06-12"));
 		System.out.println(operations.bookCar("DL2CAR0002", "Shyam Kumar", "99999", "2020-06-15", "2020-06-20"));
 		
 		// 6 - 10 June
@@ -90,20 +106,73 @@ public class View {
 				String returnDate = scanner.nextLine();
 				// Dictionary -> VehicleNumber : CarModel
 				HashMap<String, String> carsAvailable = operations.showCarsAvailableForBooking(issueDate, returnDate);
-				if(carsAvailable.size() == 0) {
-					System.out.println("No cars available for the dates provided");
+				vehicleNumber = getCarChoiceFromUser(carsAvailable);
+				if(vehicleNumber == null) {
 					break;
 				}
-				System.out.println("\nAvailable cars:\n");
-				int counter = 1;
-				for(String value : carsAvailable.values()) {
-					System.out.println(counter + ". " + value);
-					counter++;
-				}
-				System.out.println("Which car do you want to book?");
-				choice = scanner.nextInt();
+				System.out.println(operations.bookCar(vehicleNumber, customerName, customerPhoneNo, issueDate, returnDate));
+				break;
+			case 6:
+				System.out.print("Enter customer name: ");
+				customerName = scanner.nextLine();
+				System.out.print("Enter customer phone no: ");
+				customerPhoneNo = scanner.nextLine();
+				System.out.print("Enter seating capacity needed: ");
+				seatingCapacity = scanner.nextInt();
 				scanner.nextLine();
-				vehicleNumber = (String) carsAvailable.keySet().toArray()[choice - 1];
+				carsAvailable = operations.showCarsAvailableForBooking(seatingCapacity);
+				vehicleNumber = getCarChoiceFromUser(carsAvailable);
+				if(vehicleNumber == null) {
+					break;
+				}
+				System.out.print("Enter issue date (YYYY-MM-DD): ");
+				issueDate = scanner.nextLine();
+				System.out.print("Enter return date (YYYY-MM-DD): ");
+				returnDate = scanner.nextLine();
+				System.out.println(operations.bookCar(vehicleNumber, customerName, customerPhoneNo, issueDate, returnDate));
+				break;
+			case 7:
+				System.out.print("Enter customer name: ");
+				customerName = scanner.nextLine();
+				System.out.print("Enter customer phone no: ");
+				customerPhoneNo = scanner.nextLine();
+				System.out.print("Enter minimum rent you are willing to pay: ");
+				int minRent = scanner.nextInt();
+				System.out.print("Enter maximum rent you are willing to pay: ");
+				int maxRent = scanner.nextInt();
+				scanner.nextLine();
+				carsAvailable = operations.showCarsAvailableForBooking(minRent, maxRent);
+				vehicleNumber = getCarChoiceFromUser(carsAvailable);
+				if(vehicleNumber == null) {
+					break;
+				}
+				System.out.print("Enter issue date (YYYY-MM-DD): ");
+				issueDate = scanner.nextLine();
+				System.out.print("Enter return date (YYYY-MM-DD): ");
+				returnDate = scanner.nextLine();
+				System.out.println(operations.bookCar(vehicleNumber, customerName, customerPhoneNo, issueDate, returnDate));
+				break;
+			case 8:
+				System.out.print("Enter customer name: ");
+				customerName = scanner.nextLine();
+				System.out.print("Enter customer phone no: ");
+				customerPhoneNo = scanner.nextLine();
+				System.out.print("Enter issue date (YYYY-MM-DD): ");
+				issueDate = scanner.nextLine();
+				System.out.print("Enter return date (YYYY-MM-DD): ");
+				returnDate = scanner.nextLine();
+				System.out.print("Enter seating capacity needed: ");
+				seatingCapacity = scanner.nextInt();
+				System.out.print("Enter minimum rent you are willing to pay: ");
+				minRent = scanner.nextInt();
+				System.out.print("Enter maximum rent you are willing to pay: ");
+				maxRent = scanner.nextInt();
+				scanner.nextLine();
+				carsAvailable = operations.showCarsAvailableForBooking(issueDate, returnDate, seatingCapacity, minRent, maxRent);
+				vehicleNumber = getCarChoiceFromUser(carsAvailable);
+				if(vehicleNumber == null) {
+					break;
+				}
 				System.out.println(operations.bookCar(vehicleNumber, customerName, customerPhoneNo, issueDate, returnDate));
 				break;
 			default:
