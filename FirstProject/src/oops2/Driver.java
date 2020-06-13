@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class Driver {
 
-	public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
 		
 //		Alto800 alto = new Alto800();
 //		alto.manualGears(4);
