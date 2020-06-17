@@ -2,7 +2,7 @@ package oops;
 
 import java.util.HashMap;
 
-class Student{
+class Student extends Object{
 	static String[] nonMedOptionalSubjects = {"PhD", "ED", "French", "Music", "AI"};
 	static String[] commerceOptionalSubjects = {"IP"};
 	byte enrollment_no;
@@ -39,7 +39,23 @@ class Student{
 		else {
 			System.out.println("Stream not available!!");
 		}
+		
 	}
+
+	@Override
+	public String toString() {
+		return "Student [enrollment_no=" + enrollment_no + ", name=" + name + ", classLevel=" + classLevel
+				+ ", fatherName=" + fatherName + ", address=" + address + ", contact=" + contact + ", stream=" + stream
+				+ ", subjectsWiseMarks=" + subjectsWiseMarks + "]";
+	}
+	
+//	@Override
+//	public String toString() {
+//		return "Roll no : " + enrollment_no + ", Name : " + name + ", Class : " + classLevel +
+//				", Stream : " + stream + ", Marks : " + subjectsWiseMarks;
+//	}
+	
+	
 	
 }
 
@@ -49,6 +65,9 @@ public class MyDictionary {
 		Student obj1 = new Student();
 		obj1.enrollment_no = 1;
 		obj1.name = "Ram";
+		obj1.fatherName = "Ramu";
+		obj1.address = "Delhi";
+		obj1.contact = 100;
 		obj1.classLevel = 11;
 		obj1.stream = "non-med";
 		obj1.subjectsWiseMarks.put("English", 85);
@@ -59,6 +78,8 @@ public class MyDictionary {
 		obj1.subjectsWiseMarks.put("PhD", 35);
 		obj1.printMarks();
 		
+		System.out.println(obj1);
+		
 		Student obj2 = new Student();
 		obj2.enrollment_no = 2;
 		obj2.name = "Shyam";
@@ -66,6 +87,8 @@ public class MyDictionary {
 		obj2.stream = "commerce";
 		obj2.subjectsWiseMarks.put("IP", 85);
 		obj2.printMarks();
+		
+		System.out.println(obj2);
 	}
 
 }

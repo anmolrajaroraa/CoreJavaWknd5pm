@@ -19,7 +19,23 @@ public class MyLinkedList {
 			head = node;
 			return head;
 		}
-		return null;
+		else {
+			Node current = head;
+			while(current.next != null) {
+				current = current.next;
+			}
+			Node node = new Node(data);
+			current.next = node;
+			return head;
+		}
+	}
+	
+	static void display(Node head) {
+		Node current = head;
+		while(current != null) {
+			System.out.print(current.data + " -> ");
+			current = current.next;
+		}
 	}
 
 	public static void main(String[] args) {
@@ -35,6 +51,8 @@ public class MyLinkedList {
 			int data = scanner.nextInt();
 			head = insert(data, head);
 		}
+		
+		display(head);
 		
 		scanner.close();
 
