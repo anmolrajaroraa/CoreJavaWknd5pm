@@ -151,11 +151,22 @@ class EmployeeSalarySlip{
 		setNetSalary();
 	}
 	
+	@Override
+	public String toString() {
+		return "EmployeeSalarySlip [employee_id=" + employee_id + ", name=" + name + ", designation=" + designation
+				+ ", years=" + years + ", months=" + months + ", basicSalary=" + basicSalary + ", loanTaken="
+				+ loanTaken + ", HRA=" + HRA + ", DA=" + DA + ", TA=" + TA + ", MA=" + MA + ", PF=" + PF + ", EMI="
+				+ EMI + ", tax=" + tax + ", grossSalary=" + grossSalary + ", netSalary=" + netSalary + "]";
+	}
+	
 }
 
 public class Solution2 {
 
 	public static void main(String[] args) {
+		
+		EmployeeSalarySlip employee = new EmployeeSalarySlip(101, "Ram Kumar", "Developer", 15000, true);
+		System.out.println(employee);
 		
 	}
 
