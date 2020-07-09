@@ -65,7 +65,7 @@ interface StarPlayer{
 	}
 }
 
-interface HybridPlayer extends Player, StarPlayer{
+interface HybridPlayer extends Player{
 	void superPower();
 
 	@Override
@@ -73,9 +73,9 @@ interface HybridPlayer extends Player, StarPlayer{
 		Player.super.entry();
 	}
 	
-	default void starEntry() {
-		StarPlayer.super.entry();
-	}
+//	default void starEntry() {
+//		StarPlayer.super.entry();
+//	}
 }
 
 //interface StarPlayer extends Player{
@@ -143,13 +143,14 @@ class Ryu implements Player{
 	@Override
 	public void defense() {
 		System.out.println("karate defense");
+		Player.super.entry();
 	}
 
-//	@Override
-//	public void entry() {
-//		System.out.println("Player will enter in some walking style");
-//		
-//	}
+	@Override
+	public void entry() {
+		System.out.println("Player will enter in some walking style");
+		
+	}
 	
 }
 
@@ -173,6 +174,7 @@ class Honda implements Player{
 	@Override
 	public void defense() {
 		System.out.println("stand still");
+		getPlayerFeatures();
 	}
 
 //	@Override

@@ -10,7 +10,7 @@ interface XX{
 class YY implements XX{
 	
 	public YY() {
-		
+		display();
 	}
 
 	@Override
