@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -62,7 +64,7 @@ public class Register extends JFrame {
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				if(nameBox.getText().equals("Enter EmailID here")) {
+				if(nameBox.getText().equals("Enter Name here")) {
 					nameBox.setText("");
 					nameBox.setForeground(Color.BLACK);
 				}
@@ -117,7 +119,7 @@ public class Register extends JFrame {
 		lblPassword.setBounds(50, 175, 100, 25);
 		contentPane.add(lblPassword);
 		
-		passwordBox = new JPasswordField("Enter password here");
+		passwordBox = new JPasswordField("Enter Password here");
 		passwordBox.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		passwordBox.setBounds(150, 170, 250, 26);
 		passwordBox.setForeground(Color.GRAY);
@@ -128,7 +130,7 @@ public class Register extends JFrame {
 			@Override
 			public void focusGained(FocusEvent e) {
 				String password = new String(passwordBox.getPassword());
-				if(password.equals("Enter password here")) {
+				if(password.equals("Enter Password here")) {
 					passwordBox.setText("");
 					passwordBox.setEchoChar('●');
 					passwordBox.setForeground(Color.BLACK);
@@ -139,7 +141,7 @@ public class Register extends JFrame {
 			public void focusLost(FocusEvent e) {
 				String password = new String(passwordBox.getPassword());
 				if(password.equals("")) {
-					passwordBox.setText("Enter password here");
+					passwordBox.setText("Enter Password here");
 					passwordBox.setForeground(Color.GRAY);
 					passwordBox.setEchoChar((char)0);
 				}
@@ -149,9 +151,11 @@ public class Register extends JFrame {
 		
 		JButton btnReset = new JButton("Reset");
 		btnReset.addActionListener((e)->{
+			nameBox.setText("Enter Name here");
+			nameBox.setForeground(Color.GRAY);
 			emailBox.setText("Enter EmailID here");
 			emailBox.setForeground(Color.GRAY);
-			passwordBox.setText("Enter password here");
+			passwordBox.setText("Enter Password here");
 			passwordBox.setForeground(Color.GRAY);
 			passwordBox.setEchoChar((char)0);
 		});
@@ -174,9 +178,27 @@ public class Register extends JFrame {
 	}
 
 	private void register() {
+		boolean isAdded = false;
 		String name = nameBox.getText();
+		System.out.println(name);
 		String emailID = emailBox.getText();
 		String password = String.valueOf(passwordBox.getPassword());
+		if(name.equals("Enter Name here") || emailID.equals("Enter EmailID here") || password.equals("Enter Password here")) {
+			JOptionPane.showMessageDialog(this, "Please fill in details correctly");
+			return;
+		}
+		UserDAO userDAO = new UserDAO();
+		try {
+			if(userDAO.isUserExist(emailID)) {
+				JOptionPane.showMessageDialog(this, "User already exists");
+				return;
+			}
+			isAdded = userDAO.register(name, emailID, password);
+			JOptionPane.showMessageDialog(this, isAdded ? "Registration Successful" : "Registration Unsuccessful");
+		} 
+		catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void back() {

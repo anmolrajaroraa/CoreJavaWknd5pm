@@ -4,15 +4,19 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import com.company.billing.main.Dashboard;
 
 public class Login extends JFrame {
 
@@ -150,5 +154,21 @@ public class Login extends JFrame {
 	private void loginCheck() {
 		String emailID = emailBox.getText();
 		String password = new String(passwordBox.getPassword());
+		UserDAO userDAO = new UserDAO();
+		try {
+			String message = "Invalid email or password";
+			String name = userDAO.loginCheck(emailID, password);
+			if(name != null) {
+				message = "Welcome " + name;
+				this.dispose();
+				Dashboard dashboard = new Dashboard();
+				dashboard.setVisible(true);
+				dashboard.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			}
+			JOptionPane.showMessageDialog(this, message);
+		}
+		catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
