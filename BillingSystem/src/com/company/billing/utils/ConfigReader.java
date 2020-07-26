@@ -7,5 +7,6 @@ public interface ConfigReader {
 	String PWD = "password";
 	String DBURL = "dburl";
 	String DRIVER = "driver";
+	String BROWSE_PATH = "upload_path";
 	ResourceBundle rb = ResourceBundle.getBundle("config");
 }

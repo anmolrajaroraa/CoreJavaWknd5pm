@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -161,11 +160,10 @@ public class Login extends JFrame {
 			if(name != null) {
 				message = "Welcome " + name;
 				this.dispose();
-				Dashboard dashboard = new Dashboard();
+				Dashboard dashboard = new Dashboard(message);
 				dashboard.setVisible(true);
-				dashboard.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			}
-			JOptionPane.showMessageDialog(this, message);
+//			JOptionPane.showMessageDialog(this, message);
 		}
 		catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

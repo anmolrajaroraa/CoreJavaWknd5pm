@@ -180,10 +180,10 @@ public class Register extends JFrame {
 	private void register() {
 		boolean isAdded = false;
 		String name = nameBox.getText();
-		System.out.println(name);
 		String emailID = emailBox.getText();
+		System.out.println(emailID);
 		String password = String.valueOf(passwordBox.getPassword());
-		if(name.equals("Enter Name here") || emailID.equals("Enter EmailID here") || password.equals("Enter Password here")) {
+		if(name.equals("Enter Name here") || emailID.equals("Enter EmailID here") || password.equals("Enter Password here") || !emailID.matches("^[a-zA-Z0-9_$]+(?:\\.[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$")) {
 			JOptionPane.showMessageDialog(this, "Please fill in details correctly");
 			return;
 		}
@@ -195,6 +195,13 @@ public class Register extends JFrame {
 			}
 			isAdded = userDAO.register(name, emailID, password);
 			JOptionPane.showMessageDialog(this, isAdded ? "Registration Successful" : "Registration Unsuccessful");
+			if(isAdded) {
+				this.dispose();
+				Login login = new Login();
+				login.setVisible(true);
+				login.requestFocusInWindow();
+				JOptionPane.showMessageDialog(this, "Please login now");
+			}
 		} 
 		catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
