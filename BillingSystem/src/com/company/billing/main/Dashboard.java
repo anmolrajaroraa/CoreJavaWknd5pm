@@ -67,6 +67,10 @@ public class Dashboard extends JFrame implements ConfigReader{
 		
 		JMenuItem billingMenuItem = new JMenuItem("Billing");
 		adminMenu.add(billingMenuItem);
+		billingMenuItem.addActionListener((e)->{
+			BillingScreen billing = new BillingScreen();
+			billing.setVisible(true);
+		});
 		
 		JMenuItem exitMenuItem = new JMenuItem("Exit");
 		adminMenu.addSeparator();

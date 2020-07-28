@@ -39,13 +39,16 @@ public interface ExcelReader {
 			while(cells.hasNext()) {
 				Cell currentCell = cells.next();
 				switch(cellCounter) {
-				case 1:
-					product.setId((int)currentCell.getNumericCellValue());
+				case 3:
+					product.setId(currentCell.getStringCellValue());
 					break;
-				case 2:
+				case 1:
 					product.setName(currentCell.getStringCellValue());
 					break;
-				case 3:
+				case 2:
+					product.setCategory(currentCell.getStringCellValue());
+					break;
+				case 6:
 					product.setDescription(currentCell.getStringCellValue());
 					break;
 				case 4:
@@ -54,8 +57,8 @@ public interface ExcelReader {
 				case 5:
 					product.setPath(currentCell.getStringCellValue());
 					break;
-				case 6:
-					product.setQuantity((int)currentCell.getNumericCellValue());
+				case 7:
+					product.setBrand(currentCell.getStringCellValue());
 				}
 				cellCounter++;
 			} // cell loop ends

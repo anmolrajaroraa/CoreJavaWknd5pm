@@ -1,17 +1,18 @@
 package com.company.billing.model;
 
 public class Product {
-	private int id;
+	private String id;
 	private String name;
 	private String description;
 	private double price;
 	private String path;
-	private int quantity;
+	private String brand;
+	private String category;
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
@@ -43,11 +44,18 @@ public class Product {
 		this.path = path;
 	}
 	
-	public int getQuantity() {
-		return quantity;
+	public String getCategory() {
+		return category;
 	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
+	public String getBrand() {
+		return brand;
+	}
+	public void setBrand(String brand) {
+		this.brand = brand;
 	}
 	
 	

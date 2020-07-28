@@ -16,14 +16,15 @@ public interface ProductDAO {
 		}
 		connection = CommonDAO.getConnection();
 		connection.setAutoCommit(false);
-		statement = connection.prepareStatement("insert into product_mst (id, name, description, price, imgpath, quantity) values (?,?,?,?,?,?)");
+		statement = connection.prepareStatement("insert into product_mst (id, name, description, price, imgpath, brand, category ) values (?,?,?,?,?,?,?)");
 		for(Product product : productsList) {
-			statement.setInt(1, product.getId());
+			statement.setString(1, product.getId());
 			statement.setString(2, product.getName());
 			statement.setString(3, product.getDescription());
 			statement.setDouble(4, product.getPrice());
 			statement.setString(5, product.getPath());
-			statement.setInt(6, product.getQuantity());
+			statement.setString(6,  product.getBrand());
+			statement.setString(7, product.getCategory());
 			statement.addBatch();
 		}
 		
@@ -43,5 +44,9 @@ public interface ProductDAO {
 			connection.commit();
 			return true;
 		}
+	}
+	
+	public static ArrayList<Product> getProductNames() {
+		return null;
 	}
 }
